@@ -175,3 +175,41 @@ function acheterRegolithe() {
       alert('Vous n\'avez pas assez de minerais pour acheter du régolithe !');
   }
 }
+// Ajouter un écouteur d'événement pour le clic sur le bouton "Améliorer le clic"
+boutonAmeliorerClick.addEventListener('click', autoClickAmeliorer);
+
+// Ajouter un écouteur d'événement pour le bouton "Baisser le temps"
+boutonBaisserTemps.addEventListener('click', baisserTemps);
+
+// Ajouter un écouteur d'événement pour le bouton "Acheter le multiplicateur temporaire x10"
+boutonMultiplicateurTemporaire.addEventListener('click', acheterMultiplicateurTemporaire);
+
+// Écouteur d'événement pour le bouton de réinitialisation
+boutonReset.addEventListener('click', () => {
+  localStorage.removeItem('compteDollars');
+  localStorage.removeItem('nombreAutoClickAchetes');
+  location.reload();
+});
+
+
+boutonBaisserTemps.addEventListener('click', () => {
+  baisserTemps(); // Pas besoin de passer d'argument ici
+});
+// Ajouter un écouteur d'événement pour le clic sur le bouton "Améliorer le clic"
+boutonAmeliorerClick.addEventListener('click', () => {
+  autoClickAmeliorer(); // Appeler la fonction autoClickAmeliorer lorsque le bouton est cliqué
+});
+// Ajouter des écouteurs d'événements pour chaque bouton d'achat
+boutonAchatEauGelee.addEventListener('click', acheterEauGelee);
+boutonAchatRocheLunaire.addEventListener('click', acheterRocheLunaire);
+boutonAchatRegolithe.addEventListener('click', acheterRegolithe);
+// Écouteur d'événement pour le bouton de clic manuel
+boutonClic.addEventListener('click', () => {
+  compteDollars++;
+  mettreAJourCompteDollars();
+});
+
+// Écouteur d'événement pour l'achat de clic automatique toutes les 10 secondes
+boutonAchatAutoClick5s.addEventListener('click', () => {
+  acheterAutoClick(10);
+});
