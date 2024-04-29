@@ -5,59 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Space Explorer Clicker</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="logo.png" sizes="100x100">
 </head>
-
 <body>
-  <div id="titre-container">
-    <h1 id="titre">Space Explorer Clicker</h1>
-      <div id="image-container">
-          <img class="image-superposee" src="baniere.png" alt="Image superposée">
-      </div>
+  <div id="container">
+    <h1>Space Explorer Clicker</h1>
+    <p>Crédits Galactiques: <span id="compteCredits">0</span></p>
+    <button id="explorer">Explorer l'espace</button>
+    <button id="acheterNavette">Acheter une Navette (10 Crédits)</button>
+    <button id="acheterSonde">Acheter une Sonde (100 Crédits)</button>
+    <button id="acheterTelescope">Acheter un Télescope (1000 Crédits)</button>
   </div>
-  <main>
 
-      <div id="clicker"><p>Minéraux lunaire: <span id="compteDollars">0</span></p>
-          <img class="image_fusee" src="fusée.png" alt="Image superposée">
-          <button id="boutonClic" class="boutonClic_image" >Cliquer pour Générer des minerais</button>
-      </div>
-    <div id="boutique">
-          <img class="image_boutique" src="boutique.png" alt="fond de la boutique">
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p id="modal-text"></p>
+    </div>
+  </div>
 
-          <button id="boutonAchatAutoClick5s">Clic Automatique</button>
-          <button id="boutonBaisserTemps">vitesse</button>
-          <button id="boutonameliorerclick">ameliorer</button>
-          <button id="boutonReset">Reset</button>
-          <button id="boutonMultiplicateurTemporaire">Clics x10 (1 min)</button>
-          <div id="autoClickerImg" style="display: none;"><img src="auto-clicker.png" alt="Auto Clicker"></div>
-      </div>
-    <div id="guide"><p>Objectif : retourner sur terre</p>
-          <img class="image_guide" src="texte.png" alt="Image superposée">
-
-      </div>
-    <div id="infosAutoClick">
-          <p>Nombre de clics automatiques achetés : <span id="nombreAutoClick">0</span></p>
-          <p>Intervalle entre les clics automatiques: <span id="intervalleAutoClick">10</span> secondes</p>
-          <p>Multiplicateur des clics automatiques: <span id="multiplicateurAutoClick">x1</span></p>
-
-      </div>
-      <div id="achat_objectif">
-          <div class="ressource">
-              <p>Eau gelée (500 minerais) : <span id="eauGeles">0/5</span></p>
-              <img src="bouton_achat.png" alt="Eau gelée" class="icone-ressource">
-          </div>
-          <div class="ressource">
-              <p>Roche lunaire (20000 minerais) : <span id="rocheLunaire">0/10</span></p>
-              <img src="bouton_achat.png" alt="Roche lunaire" class="icone-ressource">
-          </div>
-          <div class="ressource">
-              <p>Régolithe (100000 minerais) : <span id="regolithe">0/20</span></p>
-              <img src="bouton_achat.png" alt="Régolithe" class="icone-ressource">
-          </div>
-          <!-- Ajoutez d'autres ressources au besoin -->
-      </div>
   <script src="script.js"></script>
-    </main>
-
 </body>
 </html>
