@@ -14,3 +14,16 @@ const multiplicateurAutoClick = document.getElementById('multiplicateurAutoClick
 const boutonAchatEauGelee = document.querySelector('#achat_objectif .ressource:nth-child(1) .icone-ressource');
 const boutonAchatRocheLunaire = document.querySelector('#achat_objectif .ressource:nth-child(2) .icone-ressource');
 const boutonAchatRegolithe = document.querySelector('#achat_objectif .ressource:nth-child(3) .icone-ressource');
+
+// Définir les variables
+let compteDollars = parseInt(localStorage.getItem('compteDollars')) || 0;
+let nombreAutoClickAchetes = parseInt(localStorage.getItem('nombreAutoClickAchetes')) || 0;
+let prixInitialAutoClick = 10;
+let prixSupplementaireParClick = 5;
+let intervalleActuel = 10;
+let prixProgressif = 20; // Prix initial
+let incrementPrixProgressif = 10; // Montant d'augmentation du prix à chaque achat
+let intervallesAutoClick = []; // Utilisez un autre nom pour le tableau
+let augmentationDollarsParClickAuto = 1;
+let prixInitialMultiplicateurTemporaire = 100;
+let incrementPrixMultiplicateurTemporaire = 50;
