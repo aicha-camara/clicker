@@ -111,4 +111,17 @@ function mettreAJourCompteDollars() {
 function acheterAutoClicker() {
   autoClickerImg.style.display = 'block';
 }
-
+// Fonction pour acheter le multiplicateur temporaire x10
+function acheterMultiplicateurTemporaire() {
+  if (compteDollars >= prixInitialMultiplicateurTemporaire) {
+    if (confirm(`Voulez-vous activer temporairement le multiplicateur x10 pour ${prixInitialMultiplicateurTemporaire} dollars ?`)) {
+      compteDollars -= prixInitialMultiplicateurTemporaire;
+      activerMultiplicateurTemporaire();
+      setTimeout(desactiverMultiplicateurTemporaire, 60000);
+      prixInitialMultiplicateurTemporaire += incrementPrixMultiplicateurTemporaire;
+      mettreAJourCompteDollars();
+    }
+  } else {
+    alert("Vous n'avez pas assez d'argent pour activer temporairement le multiplicateur x10 !");
+  }
+}
