@@ -27,3 +27,9 @@ let intervallesAutoClick = []; // Utilisez un autre nom pour le tableau
 let augmentationDollarsParClickAuto = 1;
 let prixInitialMultiplicateurTemporaire = 100;
 let incrementPrixMultiplicateurTemporaire = 50;
+
+// Mettre à jour l'affichage du nombre de clics automatiques et de l'intervalle entre les clics automatiques
+function mettreAJourAffichage() {
+  elementNombreAutoClick.textContent = nombreAutoClickAchetes;
+  intervalleAutoClick.textContent = intervalleActuel;
+}
