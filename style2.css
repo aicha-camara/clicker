@@ -1,0 +1,56 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background: rgb(48,70,182);
+    background: radial-gradient(circle, rgba(48,70,182,1) 23%, rgba(5,4,34,1) 100%);
+    text-align: center;
+    background-image: url('ecran.png');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+  }
+
+#titre-container {
+  position: relative; /* Permet de positionner l'image superposée par rapport à ce conteneur */
+}
+
+.image-superposee {
+  position: absolute;
+  top: 59%;
+  left: 735px;
+  transform: translate(-50%, -50%);
+  z-index: -5;
+  width: 500px; /* Remplacez la valeur par celle que vous souhaitez */
+  height: 150px; /* Remplacez la valeur par celle que vous souhaitez */
+}
+
+#titre {
+  z-index: 2; /* Pour que le titre apparaisse au-dessus de l'image */
+  color:wheat;
+  margin-top: 50px;
+
+
+}
+
+main {
+  border: 3px solid black;
+  margin-top: 5%;
+  margin-left: 8%;
+  margin-right: 8%;
+  text-align: center;
+  height: 500px;
+  background-image: url('fond.jpg');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+main p{
+  color: aliceblue;
+  font-size: 25px;
+}
+
+.image-kayou{
+  width: 300px;
+  height: 220px;
+}
