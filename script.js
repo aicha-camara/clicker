@@ -101,4 +101,10 @@ function autoClick() {
   compteDollars += nombreAutoClickAchetes * augmentationDollarsParClickAuto;
   mettreAJourCompteDollars();
 }
+// Fonction pour mettre à jour l'affichage du compte de dollars
+function mettreAJourCompteDollars() {
+  elementCompteDollars.textContent = compteDollars;
+  localStorage.setItem('compteDollars', compteDollars);
+  localStorage.setItem('nombreAutoClickAchetes', nombreAutoClickAchetes);
+}
 
