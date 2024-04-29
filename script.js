@@ -33,3 +33,20 @@ function mettreAJourAffichage() {
   elementNombreAutoClick.textContent = nombreAutoClickAchetes;
   intervalleAutoClick.textContent = intervalleActuel;
 }
+// Fonction pour acheter un clic automatique
+function acheterAutoClick(interval) {
+  let prixAchat = prixInitialAutoClick + (nombreAutoClickAchetes * prixSupplementaireParClick);
+  if (compteDollars >= prixAchat) {
+    compteDollars -= prixAchat;
+    nombreAutoClickAchetes++;
+    mettreAJourCompteDollars();
+    mettreAJourAffichage();
+    alert(`Vous avez acheté un clic automatique (Toutes les ${interval} secondes) !`);
+    if (!intervallesAutoClick[interval]) {
+      intervallesAutoClick[interval] = setInterval(() => autoClick(), interval * 1000);
+      acheterAutoClicker();
+    }
+  } else {
+    alert('Pas assez de dollars ou clic automatique déjà acheté !');
+  }
+}
