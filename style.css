@@ -33,3 +33,16 @@ body {
   color:wheat;
   margin-top: 50px;
 }
+main {
+  border: 3px solid black;
+  margin-top: 5%;
+  margin-left: 8%;
+  margin-right: 8%;
+  text-align: center;
+  height: 500px;
+  background-image: url('fond.jpg');
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
