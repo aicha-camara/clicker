@@ -1,215 +1,125 @@
-// Récupérer les éléments du DOM
-const elementCompteDollars = document.getElementById('compteDollars');
-const boutonClic = document.getElementById('boutonClic');
-const boutonAchatAutoClick5s = document.getElementById('boutonAchatAutoClick5s');
-const boutonAchatAutoClick2s = document.getElementById('boutonAchatAutoClick2s');
-const boutonReset = document.getElementById('boutonReset');
-const autoClickerImg = document.getElementById('autoClickerImg');
-const boutonBaisserTemps = document.getElementById('boutonBaisserTemps');
-const elementNombreAutoClick = document.getElementById('nombreAutoClick');
-const intervalleAutoClick = document.getElementById('intervalleAutoClick');
-const boutonAmeliorerClick = document.getElementById('boutonameliorerclick');
-const boutonMultiplicateurTemporaire = document.getElementById('boutonMultiplicateurTemporaire');
-const multiplicateurAutoClick = document.getElementById('multiplicateurAutoClick');
-const boutonAchatEauGelee = document.querySelector('#achat_objectif .ressource:nth-child(1) .icone-ressource');
-const boutonAchatRocheLunaire = document.querySelector('#achat_objectif .ressource:nth-child(2) .icone-ressource');
-const boutonAchatRegolithe = document.querySelector('#achat_objectif .ressource:nth-child(3) .icone-ressource');
+let compteCredits = parseInt(localStorage.getItem('compteCredits')) || 0;
+let intervalleAutoExplore = null;
+let intervalleAutoSonde = null;
+let intervalleAutoTelescope = null;
+let navetteLevel = 1;
+let sondeLevel = 1;
+let telescopeLevel = 1;
 
-// Définir les variables
-let compteDollars = parseInt(localStorage.getItem('compteDollars')) || 0;
-let nombreAutoClickAchetes = parseInt(localStorage.getItem('nombreAutoClickAchetes')) || 0;
-let prixInitialAutoClick = 10;
-let prixSupplementaireParClick = 5;
-let intervalleActuel = 10;
-let prixProgressif = 20; // Prix initial
-let incrementPrixProgressif = 10; // Montant d'augmentation du prix à chaque achat
-let intervallesAutoClick = []; // Utilisez un autre nom pour le tableau
-let augmentationDollarsParClickAuto = 1;
-let prixInitialMultiplicateurTemporaire = 100;
-let incrementPrixMultiplicateurTemporaire = 50;
+const elementCompteCredits = document.getElementById('compteCredits');
+elementCompteCredits.textContent = compteCredits;
 
-// Mettre à jour l'affichage du nombre de clics automatiques et de l'intervalle entre les clics automatiques
-function mettreAJourAffichage() {
-  elementNombreAutoClick.textContent = nombreAutoClickAchetes;
-  intervalleAutoClick.textContent = intervalleActuel;
-}
-// Fonction pour acheter un clic automatique
-function acheterAutoClick(interval) {
-  let prixAchat = prixInitialAutoClick + (nombreAutoClickAchetes * prixSupplementaireParClick);
-  if (compteDollars >= prixAchat) {
-    compteDollars -= prixAchat;
-    nombreAutoClickAchetes++;
-    mettreAJourCompteDollars();
-    mettreAJourAffichage();
-    alert(`Vous avez acheté un clic automatique (Toutes les ${interval} secondes) !`);
-    if (!intervallesAutoClick[interval]) {
-      intervallesAutoClick[interval] = setInterval(() => autoClick(), interval * 1000);
-      acheterAutoClicker();
+const explorerButton = document.getElementById('explorer');
+explorerButton.addEventListener('click', () => {
+  compteCredits += Math.floor(Math.random() * 10) + 1;
+  mettreAJourCompteCredits();
+});
+
+const acheterNavetteButton = document.getElementById('acheterNavette');
+mettreAJourPrixAchat(acheterNavetteButton, "navette");
+
+acheterNavetteButton.addEventListener('click', () => {
+  const prixNavette = Math.ceil(10 * Math.pow(1.3, navetteLevel)); // Prix augmenté de 30% à chaque achat
+  if (compteCredits >= prixNavette) {
+    compteCredits -= prixNavette;
+    navetteLevel++;
+    mettreAJourCompteCredits();
+    activerPouvoirNavette();
+    alert(`Vous avez acheté une Navette Spatiale de niveau ${navetteLevel} !`);
+    if (!intervalleAutoExplore) {
+      intervalleAutoExplore = setInterval(autoExplore, 500); // Exploration automatique toutes les 0.5 seconde
     }
   } else {
-    alert('Pas assez de dollars ou clic automatique déjà acheté !');
+    alert(`Pas assez de crédits ! Prix: ${prixNavette} crédits`);
   }
-}
-// Fonction pour baisser le temps entre les clics automatiques et payer pour cela
-function baisserTemps() {
-  let prixBaisseTemps = prixProgressif;
-  if (nombreAutoClickAchetes > 0) {
-    if (compteDollars >= prixBaisseTemps) {
-      if (confirm(`Êtes-vous sûr de vouloir acheter une baisse de temps pour ${prixBaisseTemps} dollars ?`)) {
-        intervalleActuel--;
-        const nouveauIntervallesAutoClick = {};
-        for (const interval in intervallesAutoClick) {
-          if (intervallesAutoClick.hasOwnProperty(interval)) {
-            clearInterval(intervallesAutoClick[interval]);
-            intervallesAutoClick[interval] = setInterval(() => autoClick(), intervalleActuel * 1000);
-            nouveauIntervallesAutoClick[interval] = intervallesAutoClick[interval];
-          }
-        }
-        intervallesAutoClick = nouveauIntervallesAutoClick;
-        alert(`Vous avez diminué le temps des clics automatiques à ${intervalleActuel} secondes !`);
-        compteDollars -= prixBaisseTemps;
-        prixProgressif += incrementPrixProgressif;
-        mettreAJourCompteDollars();
-        mettreAJourAffichage();
-      }
-    } else {
-      alert(`Vous n'avez pas assez d'argent pour acheter la baisse de temps, il vous faut ${prixBaisseTemps}$ !`);
+  mettreAJourIconeAchat("navette");
+  mettreAJourPrixAchat(acheterNavetteButton, "navette");
+});
+
+const acheterSondeButton = document.getElementById('acheterSonde');
+mettreAJourPrixAchat(acheterSondeButton, "sonde");
+
+acheterSondeButton.addEventListener('click', () => {
+  const prixSonde = Math.ceil(100 * Math.pow(1.3, sondeLevel)); // Prix augmenté de 30% à chaque achat
+  if (compteCredits >= prixSonde) {
+    compteCredits -= prixSonde;
+    sondeLevel++;
+    mettreAJourCompteCredits();
+    activerPouvoirSonde();
+    alert(`Vous avez acheté une Sonde Spatiale de niveau ${sondeLevel} !`);
+    if (!intervalleAutoSonde) {
+      intervalleAutoSonde = setInterval(autoSonde, 2000); // Exploration automatique toutes les 2 secondes
     }
   } else {
-    alert('Aucun clic automatique à baisser !');
+    alert(`Pas assez de crédits ! Prix: ${prixSonde} crédits`);
   }
-}
-// Fonction pour le clic automatique amélioré
-function autoClickAmeliorer() {
-  augmentationDollarsParClickAuto++;
-  alert(`Vous avez amélioré le montant de dollars gagnés par clic automatique à x${augmentationDollarsParClickAuto} !`);
-  mettreAJourCompteDollars();
-}
-// Fonction pour activer temporairement le multiplicateur x10
-function activerMultiplicateurTemporaire() {
-  augmentationDollarsParClickAuto *= 10;
-  multiplicateurAutoClick.textContent = `x${augmentationDollarsParClickAuto}`;
-}
+  mettreAJourIconeAchat("sonde");
+  mettreAJourPrixAchat(acheterSondeButton, "sonde");
+});
 
-// Fonction pour désactiver le multiplicateur temporaire x10
-function desactiverMultiplicateurTemporaire() {
-  augmentationDollarsParClickAuto /= 10;
-  multiplicateurAutoClick.textContent = `x${augmentationDollarsParClickAuto}`;
-}
-// Fonction pour le clic automatique
-function autoClick() {
-  compteDollars += nombreAutoClickAchetes * augmentationDollarsParClickAuto;
-  mettreAJourCompteDollars();
-}
-// Fonction pour mettre à jour l'affichage du compte de dollars
-function mettreAJourCompteDollars() {
-  elementCompteDollars.textContent = compteDollars;
-  localStorage.setItem('compteDollars', compteDollars);
-  localStorage.setItem('nombreAutoClickAchetes', nombreAutoClickAchetes);
-}
-// Fonction pour afficher l'image de l'auto clicker
-function acheterAutoClicker() {
-  autoClickerImg.style.display = 'block';
-}
-// Fonction pour acheter le multiplicateur temporaire x10
-function acheterMultiplicateurTemporaire() {
-  if (compteDollars >= prixInitialMultiplicateurTemporaire) {
-    if (confirm(`Voulez-vous activer temporairement le multiplicateur x10 pour ${prixInitialMultiplicateurTemporaire} dollars ?`)) {
-      compteDollars -= prixInitialMultiplicateurTemporaire;
-      activerMultiplicateurTemporaire();
-      setTimeout(desactiverMultiplicateurTemporaire, 60000);
-      prixInitialMultiplicateurTemporaire += incrementPrixMultiplicateurTemporaire;
-      mettreAJourCompteDollars();
+const acheterTelescopeButton = document.getElementById('acheterTelescope');
+mettreAJourPrixAchat(acheterTelescopeButton, "telescope");
+
+acheterTelescopeButton.addEventListener('click', () => {
+  const prixTelescope = Math.ceil(1000 * Math.pow(1.3, telescopeLevel)); // Prix augmenté de 30% à chaque achat
+  if (compteCredits >= prixTelescope) {
+    compteCredits -= prixTelescope;
+    telescopeLevel++;
+    mettreAJourCompteCredits();
+    activerPouvoirTelescope();
+    alert(`Vous avez acheté un Télescope Spatial de niveau ${telescopeLevel} !`);
+    if (!intervalleAutoTelescope) {
+      intervalleAutoTelescope = setInterval(autoTelescope, 1000); // Exploration automatique toutes les 1 seconde
     }
   } else {
-    alert("Vous n'avez pas assez d'argent pour activer temporairement le multiplicateur x10 !");
+    alert(`Pas assez de crédits ! Prix: ${prixTelescope} crédits`);
   }
-}
-// Fonction pour acheter de l'eau gelée
-function acheterEauGelee() {
-  const prixEauGelee = 500; // Prix de l'eau gelée
-  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
+  mettreAJourIconeAchat("telescope");
+  mettreAJourPrixAchat(acheterTelescopeButton, "telescope");
+});
 
-  if (mineraisDisponibles >= prixEauGelee) {
-    localStorage.setItem('minerais', mineraisDisponibles - prixEauGelee);
-    mettreAJourAffichage();
-    alert('Achat d\'eau gelée effectué avec succès !');
-  } else {
-    alert('Vous n\'avez pas assez de minerais pour acheter de l\'eau gelée !');
-  }
+function autoExplore() {
+  const gain = navetteLevel * (Math.floor(Math.random() * 10) + 1); // Gain augmenté avec le niveau de la navette
+  compteCredits += gain;
+  mettreAJourCompteCredits();
 }
 
-
-function acheterRocheLunaire() {
-  const prixRocheLunaire = 20000; // Prix de la roche lunaire
-  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
-
-  if (mineraisDisponibles >= prixRocheLunaire) {
-      if (confirm(`Voulez-vous acheter de la roche lunaire pour ${prixRocheLunaire} minerais ?`)) {
-          // Réduire le nombre de minerais
-          localStorage.setItem('minerais', mineraisDisponibles - prixRocheLunaire);
-
-          // Mettre à jour l'affichage
-          mettreAJourAffichage();
-          alert('Achat effectué avec succès !');
-      }
-  } else {
-      alert('Vous n\'avez pas assez de minerais pour acheter de la roche lunaire !');
-  }
+function autoSonde() {
+  const gain = sondeLevel * 2; // Gain augmenté avec le niveau de la sonde
+  compteCredits += gain;
+  mettreAJourCompteCredits();
 }
 
-function acheterRegolithe() {
-  const prixRegolithe = 100000; // Prix du régolithe
-  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
-
-  if (mineraisDisponibles >= prixRegolithe) {
-      if (confirm(`Voulez-vous acheter du régolithe pour ${prixRegolithe} minerais ?`)) {
-          // Réduire le nombre de minerais
-          localStorage.setItem('minerais', mineraisDisponibles - prixRegolithe);
-
-          // Mettre à jour l'affichage
-          mettreAJourAffichage();
-          alert('Achat effectué avec succès !');
-      }
-  } else {
-      alert('Vous n\'avez pas assez de minerais pour acheter du régolithe !');
-  }
+function autoTelescope() {
+  const gain = telescopeLevel * (Math.floor(Math.random() * 14) + 2); // Gain augmenté avec le niveau du télescope
+  compteCredits += gain;
+  mettreAJourCompteCredits();
 }
-// Ajouter un écouteur d'événement pour le clic sur le bouton "Améliorer le clic"
-boutonAmeliorerClick.addEventListener('click', autoClickAmeliorer);
 
-// Ajouter un écouteur d'événement pour le bouton "Baisser le temps"
-boutonBaisserTemps.addEventListener('click', baisserTemps);
+function mettreAJourCompteCredits() {
+  elementCompteCredits.textContent = compteCredits;
+  localStorage.setItem('compteCredits', compteCredits);
+}
 
-// Ajouter un écouteur d'événement pour le bouton "Acheter le multiplicateur temporaire x10"
-boutonMultiplicateurTemporaire.addEventListener('click', acheterMultiplicateurTemporaire);
+function activerPouvoirNavette() {
+  alert('La Navette Spatiale vous permet de cliquer plus rapidement dans l\'espace !');
+}
 
-// Écouteur d'événement pour le bouton de réinitialisation
-boutonReset.addEventListener('click', () => {
-  localStorage.removeItem('compteDollars');
-  localStorage.removeItem('nombreAutoClickAchetes');
-  location.reload();
-});
+function activerPouvoirSonde() {
+  alert('La Sonde Spatiale explore automatiquement l\'espace et collecte des données pour vous !');
+}
 
+function activerPouvoirTelescope() {
+  alert('Le Télescope Spatial trouve des objets spéciaux dans l\'espace, vous permettant de collecter plus de crédits !');
+}
 
-boutonBaisserTemps.addEventListener('click', () => {
-  baisserTemps(); // Pas besoin de passer d'argument ici
-});
-// Ajouter un écouteur d'événement pour le clic sur le bouton "Améliorer le clic"
-boutonAmeliorerClick.addEventListener('click', () => {
-  autoClickAmeliorer(); // Appeler la fonction autoClickAmeliorer lorsque le bouton est cliqué
-});
-// Ajouter des écouteurs d'événements pour chaque bouton d'achat
-boutonAchatEauGelee.addEventListener('click', acheterEauGelee);
-boutonAchatRocheLunaire.addEventListener('click', acheterRocheLunaire);
-boutonAchatRegolithe.addEventListener('click', acheterRegolithe);
-// Écouteur d'événement pour le bouton de clic manuel
-boutonClic.addEventListener('click', () => {
-  compteDollars++;
-  mettreAJourCompteDollars();
-});
+function mettreAJourIconeAchat(type) {
+  const button = document.getElementById(`acheter${type.charAt(0).toUpperCase() + type.slice(1)}Button`);
+  button.classList.remove("level1", "level2", "level3", "level4", "level5");
+  button.classList.add(`level${eval(`${type}Level`)}`);
+}
 
-// Écouteur d'événement pour l'achat de clic automatique toutes les 10 secondes
-boutonAchatAutoClick5s.addEventListener('click', () => {
-  acheterAutoClick(10);
-});
+function mettreAJourPrixAchat(button, type) {
+  const prix = Math.ceil(eval(`${type}Level === 1 ? ${type}Level * 10 : ${type}Level * 10 * Math.pow(1.3, ${type}Level - 1)`));
+  button.textContent = `Acheter une ${type.charAt(0).toUpperCase() + type.slice(1)} (${prix} Crédits)`;
+}
