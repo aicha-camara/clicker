@@ -10,3 +10,26 @@ body {
     background-position: center;
 
   }
+#autoClickerImg img {
+    width: 30px; /* Modifiez cette valeur selon vos besoins */
+    height: auto; /* Vous pouvez également ajuster la hauteur en fonction de la largeur */
+}
+#titre-container {
+  position: relative; /* Permet de positionner l'image superposée par rapport à ce conteneur */
+}
+
+.image-superposee {
+  position: absolute;
+  top: 59%;
+  left: 735px;
+  transform: translate(-50%, -50%);
+  z-index: -5;
+  width: 500px; /* Remplacez la valeur par celle que vous souhaitez */
+  height: 150px; /* Remplacez la valeur par celle que vous souhaitez */
+}
+
+#titre {
+  z-index: 2; /* Pour que le titre apparaisse au-dessus de l'image */
+  color:wheat;
+  margin-top: 50px;
+}
