@@ -109,3 +109,29 @@ main {
   font-size: 50px;
 
 }
+#achat_objectif {
+  color: aliceblue;
+  position: fixed; /* Positionnement fixe par rapport à la fenêtre du navigateur */
+  top: 65%; /* Alignement vertical au milieu de la fenêtre */
+  left: 75%; /* Alignement horizontal au milieu de la fenêtre */
+  transform: translate(-50%, -50%); /* Décalage de moitié de la largeur et de la hauteur pour centrer l'élément */
+  padding: 10px; /* Espacement intérieur */
+
+}
+#achat_objectif p{
+  color:white;
+  text-align: center;
+  font-size: 15px;
+
+}
+#achat_objectif .ressource {
+  display: flex; /* Affiche les éléments en ligne */
+  align-items: center; /* Centre verticalement les éléments */
+}
+
+.icone-ressource {
+  width: 32px; /* Largeur de l'icône */
+  height: 32px; /* Hauteur de l'icône */
+  cursor: pointer; /* Curseur pointer pour indiquer qu'il s'agit d'un élément cliquable */
+  margin-left: 10px; /* Espacement à gauche pour séparer l'image du texte */
+}
