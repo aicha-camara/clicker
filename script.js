@@ -79,3 +79,9 @@ function baisserTemps() {
     alert('Aucun clic automatique à baisser !');
   }
 }
+// Fonction pour le clic automatique amélioré
+function autoClickAmeliorer() {
+  augmentationDollarsParClickAuto++;
+  alert(`Vous avez amélioré le montant de dollars gagnés par clic automatique à x${augmentationDollarsParClickAuto} !`);
+  mettreAJourCompteDollars();
+}
