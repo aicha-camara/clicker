@@ -85,3 +85,14 @@ function autoClickAmeliorer() {
   alert(`Vous avez amélioré le montant de dollars gagnés par clic automatique à x${augmentationDollarsParClickAuto} !`);
   mettreAJourCompteDollars();
 }
+// Fonction pour activer temporairement le multiplicateur x10
+function activerMultiplicateurTemporaire() {
+  augmentationDollarsParClickAuto *= 10;
+  multiplicateurAutoClick.textContent = `x${augmentationDollarsParClickAuto}`;
+}
+
+// Fonction pour désactiver le multiplicateur temporaire x10
+function desactiverMultiplicateurTemporaire() {
+  augmentationDollarsParClickAuto /= 10;
+  multiplicateurAutoClick.textContent = `x${augmentationDollarsParClickAuto}`;
+}
