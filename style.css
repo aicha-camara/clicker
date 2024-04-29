@@ -46,3 +46,27 @@ main {
     background-position: center;
 
 }
+#boutique {
+  margin-left: 0%;
+  text-align: center;
+  margin-top: -350px;
+  width: 280px; /* Remplacez la valeur par celle que vous souhaitez */
+  height: 400px;
+
+}
+.image_boutique{
+  z-index: -100;
+
+
+}
+#boutique button {
+  display: flex;
+  padding: 5px 20px;
+  margin-left: 50px;
+  margin-top: -85px ;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: rgb(230, 214, 214);
+  z-index: 10;
+
+}
