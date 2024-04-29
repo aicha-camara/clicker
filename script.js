@@ -96,3 +96,9 @@ function desactiverMultiplicateurTemporaire() {
   augmentationDollarsParClickAuto /= 10;
   multiplicateurAutoClick.textContent = `x${augmentationDollarsParClickAuto}`;
 }
+// Fonction pour le clic automatique
+function autoClick() {
+  compteDollars += nombreAutoClickAchetes * augmentationDollarsParClickAuto;
+  mettreAJourCompteDollars();
+}
+
