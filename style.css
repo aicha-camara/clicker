@@ -70,3 +70,15 @@ main {
   z-index: 10;
 
 }
+#clicker {
+  margin-top: 2%;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+#clicker p{
+  color: rgb(186, 165, 165);
+}
+.image_fusee{
+  width: 300px; /* Remplacez la valeur par celle que vous so  uhaitez */
+  height: 300px;
+}
