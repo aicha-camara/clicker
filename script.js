@@ -50,3 +50,32 @@ function acheterAutoClick(interval) {
     alert('Pas assez de dollars ou clic automatique déjà acheté !');
   }
 }
+// Fonction pour baisser le temps entre les clics automatiques et payer pour cela
+function baisserTemps() {
+  let prixBaisseTemps = prixProgressif;
+  if (nombreAutoClickAchetes > 0) {
+    if (compteDollars >= prixBaisseTemps) {
+      if (confirm(`Êtes-vous sûr de vouloir acheter une baisse de temps pour ${prixBaisseTemps} dollars ?`)) {
+        intervalleActuel--;
+        const nouveauIntervallesAutoClick = {};
+        for (const interval in intervallesAutoClick) {
+          if (intervallesAutoClick.hasOwnProperty(interval)) {
+            clearInterval(intervallesAutoClick[interval]);
+            intervallesAutoClick[interval] = setInterval(() => autoClick(), intervalleActuel * 1000);
+            nouveauIntervallesAutoClick[interval] = intervallesAutoClick[interval];
+          }
+        }
+        intervallesAutoClick = nouveauIntervallesAutoClick;
+        alert(`Vous avez diminué le temps des clics automatiques à ${intervalleActuel} secondes !`);
+        compteDollars -= prixBaisseTemps;
+        prixProgressif += incrementPrixProgressif;
+        mettreAJourCompteDollars();
+        mettreAJourAffichage();
+      }
+    } else {
+      alert(`Vous n'avez pas assez d'argent pour acheter la baisse de temps, il vous faut ${prixBaisseTemps}$ !`);
+    }
+  } else {
+    alert('Aucun clic automatique à baisser !');
+  }
+}
