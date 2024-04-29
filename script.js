@@ -125,3 +125,53 @@ function acheterMultiplicateurTemporaire() {
     alert("Vous n'avez pas assez d'argent pour activer temporairement le multiplicateur x10 !");
   }
 }
+// Fonction pour acheter de l'eau gelée
+function acheterEauGelee() {
+  const prixEauGelee = 500; // Prix de l'eau gelée
+  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
+
+  if (mineraisDisponibles >= prixEauGelee) {
+    localStorage.setItem('minerais', mineraisDisponibles - prixEauGelee);
+    mettreAJourAffichage();
+    alert('Achat d\'eau gelée effectué avec succès !');
+  } else {
+    alert('Vous n\'avez pas assez de minerais pour acheter de l\'eau gelée !');
+  }
+}
+
+
+function acheterRocheLunaire() {
+  const prixRocheLunaire = 20000; // Prix de la roche lunaire
+  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
+
+  if (mineraisDisponibles >= prixRocheLunaire) {
+      if (confirm(`Voulez-vous acheter de la roche lunaire pour ${prixRocheLunaire} minerais ?`)) {
+          // Réduire le nombre de minerais
+          localStorage.setItem('minerais', mineraisDisponibles - prixRocheLunaire);
+
+          // Mettre à jour l'affichage
+          mettreAJourAffichage();
+          alert('Achat effectué avec succès !');
+      }
+  } else {
+      alert('Vous n\'avez pas assez de minerais pour acheter de la roche lunaire !');
+  }
+}
+
+function acheterRegolithe() {
+  const prixRegolithe = 100000; // Prix du régolithe
+  const mineraisDisponibles = parseInt(localStorage.getItem('minerais')) || 0; // Nombre de minerais disponibles
+
+  if (mineraisDisponibles >= prixRegolithe) {
+      if (confirm(`Voulez-vous acheter du régolithe pour ${prixRegolithe} minerais ?`)) {
+          // Réduire le nombre de minerais
+          localStorage.setItem('minerais', mineraisDisponibles - prixRegolithe);
+
+          // Mettre à jour l'affichage
+          mettreAJourAffichage();
+          alert('Achat effectué avec succès !');
+      }
+  } else {
+      alert('Vous n\'avez pas assez de minerais pour acheter du régolithe !');
+  }
+}
