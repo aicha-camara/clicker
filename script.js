@@ -107,4 +107,8 @@ function mettreAJourCompteDollars() {
   localStorage.setItem('compteDollars', compteDollars);
   localStorage.setItem('nombreAutoClickAchetes', nombreAutoClickAchetes);
 }
+// Fonction pour afficher l'image de l'auto clicker
+function acheterAutoClicker() {
+  autoClickerImg.style.display = 'block';
+}
 
